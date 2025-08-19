@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col">
+        <h1><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h1>
+        <p class="lead">Welcome back, {{ current_user.username }}!</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-plus-circle me-2"></i>Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('rounds.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Create New Round
+                    </a>
+                    <a href="{{ url_for('games.create') }}" class="btn btn-success">
+                        <i class="fas fa-gamepad me-2"></i>Create New Game
+                    </a>
+                    <a href="{{ url_for('rounds.my_rounds') }}" class="btn btn-info">
+                        <i class="fas fa-list me-2"></i>View My Rounds
+                    </a>
+                    <a href="{{ url_for('games.my_games') }}" class="btn btn-warning">
+                        <i class="fas fa-calendar me-2"></i>View My Games
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-chart-bar me-2"></i>Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6">
+                        <h3 class="text-primary">{{ recent_rounds|length }}</h3>
+                        <p class="text-muted">Recent Rounds</p>
+                    </div>
+                    <div class="col-6">
+                        <h3 class="text-success">{{ recent_games|length }}</h3>
+                        <p class="text-muted">Recent Games</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-clock me-2"></i>Recent Rounds</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_rounds %}
+                <div class="list-group list-group-flush">
+                    {% for round in recent_rounds %}
+                    <a href="{{ url_for('rounds.view', round_id=round.id) }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ round.title }}</h6>
+                            <small class="text-muted">{{ round.round_label }}</small>
+                        </div>
+                        <small class="text-muted">Created {{ round.created_at.strftime('%Y-%m-%d') }}</small>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted">No rounds created yet. <a href="{{ url_for('rounds.create') }}">Create your first round!</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="fas fa-calendar-alt me-2"></i>Recent Games</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_games %}
+                <div class="list-group list-group-flush">
+                    {% for game in recent_games %}
+                    <a href="{{ url_for('games.view', game_id=game.id) }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">{{ game.name }}</h6>
+                            <small class="text-muted">{{ game.game_date.strftime('%Y-%m-%d') }}</small>
+                        </div>
+                        <small class="text-muted">{{ game.game_rounds.count() }} rounds</small>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted">No games created yet. <a href="{{ url_for('games.create') }}">Create your first game!</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
