@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %} - Trivia Creator</title>
+    <title>{% block title %}{% endblock %} - Kewpie Labs</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .navbar-brand {
             font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand img {
+            height: 30px;
+            margin-right: 10px;
         }
         .main-content {
             min-height: calc(100vh - 200px);
@@ -24,7 +30,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('main.index') }}">
-                <i class="fas fa-question-circle me-2"></i>Trivia Creator
+                <img src="{{ url_for('static', filename='images/kewpielabs.png') }}" alt="Kewpie Labs Logo">
+                Kewpie Labs
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -109,7 +116,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <p>&copy; 2024 Trivia Creator. Built for trivia hosts.</p>
+                    <p>&copy; 2024 Kewpie Labs. Built for trivia hosts.</p>
                 </div>
                 <div class="col-md-6 text-end">
                     <p>Phase 1 - Foundation</p>

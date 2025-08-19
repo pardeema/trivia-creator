@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}{{ round_obj.title }}{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-lg-10 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4><i class="fas fa-question-circle me-2"></i>{{ round_obj.title }}</h4>
+                        <p class="mb-0 text-muted">Round Label: {{ round_obj.round_label }}</p>
+                    </div>
+                    {% if current_user.is_authenticated and round_obj.created_by == current_user.id %}
+                    <div>
+                        <a href="{{ url_for('rounds.add_questions', round_id=round_obj.id) }}" class="btn btn-primary">
+                            <i class="fas fa-edit me-1"></i>Edit Questions
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card-body">
+                {% if round_obj.attachment_path %}
+                <div class="mb-4">
+                    <h6><i class="fas fa-paperclip me-1"></i>Attachment</h6>
+                    <p class="text-muted">{{ round_obj.attachment_path }}</p>
+                    <!-- TODO: Add file preview/download functionality -->
+                </div>
+                {% endif %}
+                
+                {% if questions %}
+                <h5><i class="fas fa-list me-2"></i>Questions</h5>
+                {% for question in questions %}
+                <div class="question-item mb-4 p-3 border rounded">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="mb-0">Question {{ question.question_number }}</h6>
+                        <span class="badge bg-primary">{{ question.points }} point{% if question.points != 1 %}s{% endif %}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Q:</strong> {{ question.question_text }}
+                    </div>
+                    <div class="answer-section">
+                        <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#answer{{ question.id }}">
+                            <i class="fas fa-eye me-1"></i>Show Answer
+                        </button>
+                        <div class="collapse mt-2" id="answer{{ question.id }}">
+                            <div class="card card-body bg-light">
+                                <strong>A:</strong> {{ question.answer_text }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-question-circle fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No questions added yet</h5>
+                    {% if current_user.is_authenticated and round_obj.created_by == current_user.id %}
+                    <p class="text-muted">Add questions to get started!</p>
+                    <a href="{{ url_for('rounds.add_questions', round_id=round_obj.id) }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>Add Questions
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <small class="text-muted">
+                            <i class="fas fa-user me-1"></i>Created by {{ round_obj.author.username }}
+                        </small>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <small class="text-muted">
+                            <i class="fas fa-calendar me-1"></i>{{ round_obj.created_at.strftime('%Y-%m-%d') }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

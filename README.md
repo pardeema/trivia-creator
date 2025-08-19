@@ -1,4 +1,4 @@
-# Trivia Creator
+# Kewpie Labs
 
 A web application for bar trivia hosts to create, manage, and distribute quiz content.
 
@@ -41,14 +41,14 @@ This application helps trivia hosts and authors collaborate on creating quiz con
 
 ## Development Phases
 
-### Phase 1: Foundation ✅ (In Progress)
+### Phase 1: Foundation ✅ (Complete)
 - [x] Git repository initialization
 - [x] Virtual environment setup
 - [x] Basic Flask application structure
-- [ ] Database models (User, Round, Game, Question)
-- [ ] User authentication system
-- [ ] Round creation functionality
-- [ ] Basic templates and styling
+- [x] Database models (User, Round, Game, Question)
+- [x] User authentication system
+- [x] Round creation functionality
+- [x] Basic templates and styling
 
 ### Phase 2: Game Management
 - [ ] Game creation interface
@@ -147,11 +147,13 @@ trivia-creator/
 3. Activate virtual environment: `source venv/bin/activate`
 4. Install dependencies: `pip install -r requirements.txt`
 5. Initialize database: `flask db upgrade`
-6. Run the application: `python run.py`
+6. Run the application: `python run.py` (runs on http://localhost:5001)
 
 ## Current Status
 
-**Phase 1 - Foundation**: Setting up basic Flask application structure and database models.
+**Phase 1 - Foundation**: ✅ Complete! Basic Flask application with authentication, database models, and core functionality is working.
+
+**Next**: Phase 2 - Game Management (round selection, game assembly, round preference tracking)
 
 ## Notes
 
